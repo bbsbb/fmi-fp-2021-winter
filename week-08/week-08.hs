@@ -61,9 +61,19 @@ myMerge (x:xs) (y:ys)
 -- -> [3] [1] => myMerge => [1,3]
 -- myMergeSort [1,7,5,2]
 -- -> [1,7] [5,2] -> [1] [7] -> [1,7], [5] [2] -> [2, 5],  [1,7] [2,5] -> [1,2,5,7]
+
+myMerge :: (Ord a) => [a] -> [a] -> [a]
+myMerge xs [] = xs
+myMerge [] ys = ys
+myMerge (x:xs) (y:ys)
+  | x <= y = x:myMerge xs (y:ys)
+  | otherwise = y:myMerge (x:xs) ys
+
 myMergeSort :: (Ord a) => [a] -> [a]
+myMergeSort [] = []
+myMergeSort [x] = [x]
 myMergeSort xs = myMerge (myMergeSort ys) (myMergeSort zs) where
-  (ys, zs) = splitAt (length xs `div` 2) xs
+  (ys, zs) = splitAt (quot (length xs) 2) xs
 
 
 
